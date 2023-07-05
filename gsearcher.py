@@ -7,17 +7,10 @@ from typing import Final
 
 from constants import START_PAGE
 from init_args import args
-from init_keys import init_keys
+from init_keys import init_auth_data_storage
 
-my_keys = init_keys()
-my_api_key = my_keys.get("api_key")
-my_cse_id = my_keys.get("case_id")
-
-if not my_api_key:
-    raise ValueError("No API key provided")
-
-if not my_cse_id:
-    raise ValueError("No search engine id provided")
+auth_data_storage = init_auth_data_storage()
+auth_data = auth_data_storage.get_random_auth_data()
 
 
 def google_search(search_term, api_key, cse_id, num_results, start_page=1, **kwargs):
@@ -35,7 +28,12 @@ numResults = min(args.numResults, 100)  # Ensure the number of results is capped
 
 # Find results for the specified page
 results = google_search(
-    searchTerm, my_api_key, my_cse_id, num_results=min(numResults, 10), start_page=START_PAGE)
+    searchTerm,
+    auth_data.api_key,
+    auth_data.case_id,
+    num_results=min(numResults, 10),
+    start_page=START_PAGE,
+)
 result_to_write = []
 if len(results) == 0:
     result_to_write.append(
