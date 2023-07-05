@@ -1,4 +1,6 @@
 # !/usr/bin/env python3
+import json
+
 from googleapiclient.discovery import build
 import pathlib
 from typing import Final
@@ -56,3 +58,4 @@ else:
 
 ROOT_PATH: Final[pathlib.Path] = pathlib.Path(__file__).parent
 path_to_write_output: pathlib.Path = ROOT_PATH.joinpath(args.output)
+path_to_write_output.write_text(json.dumps(result_to_write))
