@@ -13,10 +13,15 @@ from init_keys import init_auth_data_storage
 
 
 def google_search(search_term, num_results, start_page=1, **kwargs):
+    auth_data_storage = init_auth_data_storage()
     amount_of_try = 20
     while amount_of_try:
-        auth_data_storage = init_auth_data_storage()
-        auth_data = auth_data_storage.get_random_auth_data()
+        auth_data = auth_data_storage.get_random_auth_data_or_none()
+
+        if auth_data is None:
+            # TODO: think about smarter way to message about invalid api keys to des
+            raise ValueError("All provided keys are invalid!")
+
         service = build("customsearch", "v1", developerKey=auth_data.api_key)
         try:
             res = service.cse().list(
@@ -45,15 +50,7 @@ def main():
         start_page=START_PAGE,
     )
     result_to_write = []
-    if len(results) == 0:
-        result_to_write.append(
-            {
-                "title": "Nothing found",
-                "source": "Nothing found",
-                "snippet": "Nothing found",
-            }
-        )
-    else:
+    if results:
         for result in results:
             print(result['link'])
             result_to_write.append(
