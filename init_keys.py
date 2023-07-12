@@ -50,6 +50,9 @@ class AuthDataStorage:
 
         return cls(_items=items)
 
+    def _get_message_about_keys(self) -> str:
+        return f"Keys remains: {len(self._items)}/{len(self._items) + len(self._used_items)}."
+
     def get_random_auth_data_or_none(self) -> AuthData | None:
         """
         Try to get auth_data.
@@ -60,16 +63,26 @@ class AuthDataStorage:
 
         Return None, if we can't provide any auth data.
         """
+        message__keys = self._get_message_about_keys()
+
+        print(message__keys)
 
         if len(self._items) == 0:
+            message__rotation = f"Rotation: {self._amount_of_rotations}/{self.MAX_AMOUNT_OF_ROTATIONS}."
             if self._amount_of_rotations >= self.MAX_AMOUNT_OF_ROTATIONS:
+                print(f"All keys are used. Can't use them again. {message__rotation} {message__keys}")
                 return None
+
+            print(f"All keys are used. Try to use them again. {message__rotation} {message__keys}")
             self._items.extend(self._used_items)
             self._amount_of_rotations += 1
 
-        random_index = random.randint(0, len(self._items))
+        max_index = len(self._items) - 1
+        random_index = random.randint(0, max_index)
         used_auth_data = self._items.pop(random_index)
         self._used_items.append(used_auth_data)
+
+        print(f'{self._get_message_about_keys()}')
 
         return used_auth_data
 
