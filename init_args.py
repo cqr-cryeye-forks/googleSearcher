@@ -74,6 +74,12 @@ def init_args() -> argparse.Namespace:
         help="Use dorks for search sgi files. Only for domain or ip address",
         action="store_true"
     )
+
+    parser.add_argument(
+        "--admin-panel", "-ap",
+        help="Use dorks for search admin panel. Only for domain or ip address",
+        action="store_true"
+    )
     # [ARGS_FOR_SEARCH_TYPE]-[END]
     return parser.parse_args()
 

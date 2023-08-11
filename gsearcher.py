@@ -10,7 +10,7 @@ from googleapiclient.errors import HttpError
 from constants import START_PAGE
 from dork_storage import DORK_FOR_DIR_LIST_VULN, DORK_FOR_CONFIG_FILE_SEARCH, DORK_FOR_DB_FIES_EXPOSED, \
     DORK_FOR_LOG_FIES_EXPOSED, DORK_FOR_BACKUP_FIES_EXPOSED, DORK_FOR_SEARCH_LOGEN_PAGES, DORK_FOR_SEARCH_SQL_ERRORS, \
-    DORK_FOR_SEARCH_PUBLICITY_EXPOSED_DOCS, DORK_FOR_SEARCH_PHP_INFO, DORK_FOR_SEARCH_CGI_FILES
+    DORK_FOR_SEARCH_PUBLICITY_EXPOSED_DOCS, DORK_FOR_SEARCH_PHP_INFO, DORK_FOR_SEARCH_CGI_FILES, DORK_FOR_ADMIN_PANEL
 from init_args import args
 from init_keys import init_auth_data_storage
 
@@ -82,6 +82,9 @@ def main():
 
     elif args.sgi_files:
         searchTerm = f"site:{searchTerm} {DORK_FOR_SEARCH_CGI_FILES}"
+
+    elif args.admin_panel:
+        searchTerm = f"site:{searchTerm} {DORK_FOR_ADMIN_PANEL}"
 
     numResults = min(args.numResults, 100)  # Ensure the number of results is capped at 100
 
