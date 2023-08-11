@@ -80,10 +80,14 @@ def init_args() -> argparse.Namespace:
         help="Use dorks for search admin panel. Only for domain or ip address",
         action="store_true"
     )
+
+    parser.add_argument(
+        "--search-passwords", "-sp",
+        help="Use dorks for search files with passwords. Only for domain or ip address",
+        action="store_true"
+    )
     # [ARGS_FOR_SEARCH_TYPE]-[END]
     return parser.parse_args()
 
-
-# "site:<your_site> "
 
 args: argparse.Namespace = init_args()
