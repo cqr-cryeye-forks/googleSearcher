@@ -3,7 +3,7 @@ DORK_FOR_DIR_LIST_VULN = "intitle:index.of"
 
 DORK_FOR_ADMIN_PANEL = "intitle:login | intext:login | inbody:login inurl:*admin* | inurl:*administrator*"
 
-DORK_FOR_TOKEN = '"tkn" | "token" | *token*  ext:env | ext:toml | ext:yaml | ext:yml | ext:cfg | ext:cwr | ext:log'
+DORK_FOR_TOKEN = '"tkn" | "token" ext:env | ext:toml | ext:yaml | ext:yml | ext:cfg | ext:cwr | ext:log'
 
 DORK_FOR_SEARCH_PASSWORDS = "ext:env |" \
                             " ext:json |" \
